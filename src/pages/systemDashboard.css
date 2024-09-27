@@ -1,0 +1,17 @@
+.systems-dashboard {
+  font-family: 'Poppins', sans-serif;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+.systems-dashboard h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 40px;
+}
+
+.systems-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
