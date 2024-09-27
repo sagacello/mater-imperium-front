@@ -9,6 +9,7 @@
   transition: transform 0.3s, box-shadow 0.3s;
   text-decoration: none;
   color: inherit;
+  width: 78%;
 }
 
 .system-card:hover {
@@ -25,14 +26,19 @@
   font-size: 1.2em;
   font-weight: bold;
   color: #fff;
-  padding: 10px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
-  margin-right: 10px;
+  margin-right: 20px;
   flex-shrink: 0;
 }
 
 .system-card-details {
   text-align: left;
+  font-size: 1em;
 }
 
 .system-card h2 {
