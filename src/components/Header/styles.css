@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  border-bottom: 1px solid #34495e;
+  height: 60px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.header-center {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.header-center h1 {
+  margin: 0;
+  font-size: 1.5em;
+  font-weight: 700;
+}
+
+.header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.time {
+  font-size: 1.2em;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.date {
+  font-size: 0.9em;
+  color: #bdc3c7;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 10px;
+    height: auto;
+    flex-wrap: wrap;
+  }
+
+  .header-center {
+    order: -1;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .header-center h1 {
+    font-size: 1.3em;
+  }
+
+  .header-left,
+  .header-right {
+    flex: 1;
+  }
+
+  .time {
+    font-size: 1em;
+  }
+
+  .date {
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 400px) {
+  .header {
+    padding: 8px;
+  }
+
+  .avatar {
+    width: 30px;
+    height: 30px;
+  }
+
+  .header-center h1 {
+    font-size: 1.1em;
+  }
+
+  .time {
+    font-size: 0.9em;
+  }
+
+  .date {
+    font-size: 0.7em;
+  }
+}

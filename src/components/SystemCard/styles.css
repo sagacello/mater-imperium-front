@@ -1,20 +1,23 @@
 .system-card {
   display: block;
   background-color: #fff;
-  border: 1px solid #ddd;
+  border: 2px solid #ddd;
   border-radius: 8px;
   padding: 20px;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
   text-decoration: none;
   color: inherit;
   width: 78%;
+  font-family: 'Roboto', sans-serif;
+  --card-color: #ddd;
 }
 
 .system-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-color: var(--card-color);
 }
 
 .system-card-content {
@@ -44,10 +47,11 @@
 .system-card h2 {
   margin: 0;
   font-size: 1.2em;
-  color: #007bff;
+  color: #2c3e50;
+  font-weight: 700;
 }
 
 .system-card p {
   margin: 10px 0 0;
-  color: #666;
+  color: #34495e;
 }

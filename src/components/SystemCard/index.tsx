@@ -1,5 +1,5 @@
 import React from 'react';
-import './SystemCard.css';
+import './styles.css';
 
 interface SystemCardProps {
   system: {
@@ -16,17 +16,23 @@ const getColor = (index: number) => {
 };
 
 export const SystemCard: React.FC<SystemCardProps> = ({ system, index }) => {
+  const cardColor = getColor(index);
+
   return (
     <a
       href={system.url}
       target="_blank"
-      rel="noopener noreferrer"
       className="system-card"
+      style={
+        {
+          '--card-color': cardColor,
+        } as React.CSSProperties
+      }
     >
       <div className="system-card-content">
         <div
           className="system-card-index"
-          style={{ backgroundColor: getColor(index) }}
+          style={{ backgroundColor: cardColor }}
         >
           {index}
         </div>

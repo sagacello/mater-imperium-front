@@ -1,6 +1,7 @@
 import React from 'react';
-import './systemDashboard.css';
+import './styles.css';
 import { SystemCard } from '../components/SystemCard';
+import { Header } from '../components/Header';
 
 interface System {
   name: string;
@@ -30,7 +31,7 @@ const systems: System[] = [
 export const SystemsDashboard: React.FC = () => {
   return (
     <div className="systems-dashboard">
-      <h1>Systems Dashboard</h1>
+      <Header avatarUrl="https://example.com/megaman-avatar.jpg" />
       <div className="systems-list">
         {systems.map((system, index) => (
           <SystemCard key={index} system={system} index={index + 1} />
