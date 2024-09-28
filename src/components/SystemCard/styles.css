@@ -1,17 +1,16 @@
 .system-card {
   display: block;
-  background-color: #fff;
-  border: 2px solid #ddd;
+  background-color: #fcfcfcdb;
+  border: 2px solid #b0c4de;
   border-radius: 8px;
-  padding: 20px;
-  text-align: center;
+  padding: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
   text-decoration: none;
-  color: inherit;
-  width: 78%;
+  color: #2c3e50;
   font-family: 'Roboto', sans-serif;
-  --card-color: #ddd;
+  --card-color: #b0c4de;
+  height: 80px;
 }
 
 .system-card:hover {
@@ -23,35 +22,74 @@
 .system-card-content {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+}
+
+.system-card-main {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
 }
 
 .system-card-index {
-  font-size: 1.2em;
   font-weight: bold;
   color: #fff;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   margin-right: 20px;
   flex-shrink: 0;
+  background-color: var(--card-color);
 }
 
 .system-card-details {
   text-align: left;
-  font-size: 1em;
+  font-size: 0.8em;
 }
 
 .system-card h2 {
+  font-family: 'Roboto', sans-serif;
   margin: 0;
-  font-size: 1.2em;
+  font-size: 1.1em;
   color: #2c3e50;
   font-weight: 700;
+
 }
 
 .system-card p {
-  margin: 10px 0 0;
+  margin: 5px 0 0;
   color: #34495e;
+  font-family: 'Roboto', sans-serif;
+}
+
+.system-card-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 15px;
+  border-left: 1px solid #e0e0e0;
+  margin-left: 15px;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  margin: 5px 0;
+  transition: color 0.2s;
+}
+
+.icon-button svg {
+  color: #7f8c8d;
+  transition: color 0.2s;
+}
+
+.icon-button:hover svg,
+.icon-button:focus svg {
+  color: var(--card-color);
 }

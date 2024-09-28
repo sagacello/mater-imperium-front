@@ -32,10 +32,12 @@ export const SystemsDashboard: React.FC = () => {
   return (
     <div className="systems-dashboard">
       <Header avatarUrl="https://example.com/megaman-avatar.jpg" />
-      <div className="systems-list">
-        {systems.map((system, index) => (
-          <SystemCard key={index} system={system} index={index + 1} />
-        ))}
+      <div className="systems-container">
+        <div className="systems-list">
+          {systems.map((system, index) => (
+            <SystemCard key={index} system={system} index={index + 1} />
+          ))}
+        </div>
       </div>
     </div>
   );
