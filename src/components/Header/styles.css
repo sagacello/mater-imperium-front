@@ -9,21 +9,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
   width: 100%;
 }
 
 .header-left {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  margin-top: 6px;
 }
 
 .avatar {
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  margin-right: 10px;
-  margin-bottom: -34px;
 }
 
 .header-center {
@@ -61,7 +60,6 @@
   background-color: rgba(236, 240, 241, 0.1);
   border-radius: 5px;
   padding: 5px 15px;
-  margin-top: 10px;
   width: 220px;
   transition: all 0.3s ease;
   border-bottom: 1px solid #ecf0f3d5;
@@ -99,6 +97,14 @@
   color: #bdc3c7;
 }
 
+.user-name {
+  margin-top: 8px;
+  font-size: 0.9em;
+  color: #ecf0f1;
+  font-family: 'Roboto', sans-serif;
+  margin-bottom: -30px;
+}
+
 @media (max-width: 768px) {
   .header {
     padding: 10px 20px;
@@ -130,7 +136,6 @@
   .avatar {
     width: 45px;
     height: 45px;
-    margin-bottom: 0px;
   }
 
   .date {

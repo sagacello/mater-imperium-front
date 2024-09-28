@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import './styles.css';
 import { HeaderProps } from './types';
 
-export const Header: React.FC<HeaderProps> = ({ avatarUrl, onSearch }) => {
+export const Header: React.FC<HeaderProps> = ({
+  avatarUrl,
+  onSearch,
+  username,
+}) => {
   const [dateTime, setDateTime] = useState(new Date());
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -54,6 +58,7 @@ export const Header: React.FC<HeaderProps> = ({ avatarUrl, onSearch }) => {
       <div className="header-content">
         <div className="header-left">
           <img src={avatarUrl} alt="Avatar" className="avatar" />
+          <span className="user-name">{username}</span>
         </div>
         <div className="header-center">
           <h1>Dashboard</h1>

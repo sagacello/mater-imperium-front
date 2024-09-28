@@ -16,7 +16,11 @@ export const SystemsDashboard: React.FC = () => {
 
   return (
     <div className="systems-dashboard">
-      <Header avatarUrl="https://i.pravatar.cc/300" onSearch={handleSearch} />
+      <Header
+        avatarUrl="https://i.pravatar.cc/300"
+        username="Usuário"
+        onSearch={handleSearch}
+      />
       <div className="systems-container">
         <div className="systems-list">
           {filteredSystems.map((system, index) => (
