@@ -1,13 +1,8 @@
 import React from 'react';
 import './styles.css';
-import { SystemCard } from '../components/SystemCard';
-import { Header } from '../components/Header';
-
-interface System {
-  name: string;
-  url: string;
-  lastUpdated: string;
-}
+import { Header } from '../../components/Header';
+import { SystemCard } from '../../components/SystemCard';
+import { System } from './types';
 
 const systems: System[] = [
   { name: 'System 1', url: 'https://system1.com', lastUpdated: '5m' },

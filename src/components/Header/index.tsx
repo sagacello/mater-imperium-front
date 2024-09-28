@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './styles.css';
-
-interface HeaderProps {
-  avatarUrl: string;
-}
+import { HeaderProps } from './types';
 
 export const Header: React.FC<HeaderProps> = ({ avatarUrl }) => {
   const [dateTime, setDateTime] = useState(new Date());
