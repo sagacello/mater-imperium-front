@@ -61,19 +61,17 @@ export const Header: React.FC<HeaderProps> = ({ avatarUrl, onSearch }) => {
         <div className="header-right">
           <span className="time">{formatTime(dateTime)}</span>
           <span className="date">{formatDate(dateTime)}</span>
-          <div className="search-bar">
-            <SearchIcon />
-            <input
-              type="text"
-              placeholder="Pesquisar sistemas..."
-              value={searchTerm}
-              onChange={handleSearch}
-            />
-          </div>
         </div>
+      </div>
+      <div className="search-bar">
+        <SearchIcon />
+        <input
+          type="text"
+          placeholder="Pesquisar sistemas..."
+          value={searchTerm}
+          onChange={handleSearch}
+        />
       </div>
     </header>
   );
 };
-
-export default Header;
