@@ -18,8 +18,8 @@ export const SystemCard: React.FC<SystemCardProps> = ({ system, index }) => {
       width="20"
       height="20"
       viewBox="0 0 24 24"
-      fill={filled ? 'yellow' : 'none'}
-      stroke="currentColor"
+      fill={filled ? 'var(--card-color)' : 'none'}
+      stroke={filled ? 'var(--card-color)' : 'currentColor'}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -42,14 +42,17 @@ export const SystemCard: React.FC<SystemCardProps> = ({ system, index }) => {
       <polyline points="20 6 9 17 4 12" />
     </svg>
   );
-  const handleFavoriteClick = (e: React.MouseEvent) => {
+
+  const handleFavoriteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setIsFavorite(!isFavorite);
+    setIsFavorite((prevFavorite) => !prevFavorite);
+    e.currentTarget.blur();
   };
 
-  const handleCheckClick = (e: React.MouseEvent) => {
+  const handleCheckClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setIsChecked(!isChecked);
+    setIsChecked((prevChecked) => !prevChecked);
+    e.currentTarget.blur();
   };
 
   return (
@@ -73,7 +76,7 @@ export const SystemCard: React.FC<SystemCardProps> = ({ system, index }) => {
           </div>
           <div className="system-card-details">
             <h2>{system.name}</h2>
-            <p>Last updated: {system.lastUpdated}</p>
+            <p>Última atualização: {system.lastUpdated}</p>
           </div>
         </div>
         <div className="system-card-actions">
