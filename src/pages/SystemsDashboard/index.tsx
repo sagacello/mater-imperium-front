@@ -4,6 +4,7 @@ import { Header } from '../../components/Header';
 import { SystemCard } from '../../components/SystemCard';
 import { systems } from '../../mocks/mockSystems';
 import { SystemWithIndex } from './types';
+import { Sidebar } from '../../components/SideBar';
 
 const COLUMN_TITLES = [
   'Projetos finalizados',
@@ -120,34 +121,38 @@ export const SystemsDashboard: React.FC = () => {
         username="Usuário"
         onSearch={handleSearch}
       />
-      <div className="systems-container">
-        <div className="systems-columns">
-          {columns.map((columnSystems, columnIndex) => (
-            <div
-              key={columnIndex}
-              className="systems-column"
-              onDragOver={handleDragOver}
-              onDrop={(e) => handleDrop(e, columnIndex)}
-            >
-              <div className="column-title">{COLUMN_TITLES[columnIndex]}</div>
-              {columnSystems.map((system, cardIndex) => (
-                <div
-                  key={system.id}
-                  draggable
-                  onDragStart={(e) =>
-                    handleDragStart(e, columnIndex, cardIndex)
-                  }
-                >
-                  <SystemCard
-                    system={system}
-                    index={system.index}
-                    onFavoriteToggle={handleFavoriteToggle}
-                  />
-                </div>
-              ))}
-            </div>
-          ))}
+
+      <div className="main-content">
+        <div className="systems-container">
+          <div className="systems-columns">
+            {columns.map((columnSystems, columnIndex) => (
+              <div
+                key={columnIndex}
+                className="systems-column"
+                onDragOver={handleDragOver}
+                onDrop={(e) => handleDrop(e, columnIndex)}
+              >
+                <div className="column-title">{COLUMN_TITLES[columnIndex]}</div>
+                {columnSystems.map((system, cardIndex) => (
+                  <div
+                    key={system.id}
+                    draggable
+                    onDragStart={(e) =>
+                      handleDragStart(e, columnIndex, cardIndex)
+                    }
+                  >
+                    <SystemCard
+                      system={system}
+                      index={system.index}
+                      onFavoriteToggle={handleFavoriteToggle}
+                    />
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
+        <Sidebar />
       </div>
     </div>
   );

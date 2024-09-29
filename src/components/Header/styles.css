@@ -1,8 +1,10 @@
 .header {
-  background-color: #41566be3;
+  background-color: #65788b;
   color: #ecf0f1;
   font-family: 'Roboto', sans-serif;
   padding: 10px 60px;
+  position: relative;
+
 }
 
 .header-content {
@@ -17,6 +19,7 @@
   flex-direction: column;
   align-items: center;
   margin-top: 6px;
+  margin-left: 30px;
 }
 
 .avatar {
@@ -41,6 +44,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  margin-right: 30px;
 }
 
 .time {
