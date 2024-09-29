@@ -44,25 +44,29 @@ export const SystemCard: React.FC<SystemCardProps> = ({ system, index }) => {
   );
 
   const handleFavoriteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+    e.stopPropagation();
     setIsFavorite((prevFavorite) => !prevFavorite);
     e.currentTarget.blur();
   };
 
   const handleCheckClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+    e.stopPropagation();
     setIsChecked((prevChecked) => !prevChecked);
     e.currentTarget.blur();
   };
 
+  const handleCardClick = () => {
+    window.open(system.url, '_blank', 'noopener,noreferrer');
+  };
+
   return (
-    <a
-      href={system.url}
-      target="_blank"
+    <div
       className="system-card"
+      onClick={handleCardClick}
       style={
         {
           '--card-color': cardColor,
+          cursor: 'pointer',
         } as React.CSSProperties
       }
     >
@@ -79,7 +83,10 @@ export const SystemCard: React.FC<SystemCardProps> = ({ system, index }) => {
             <p>Última atualização: {system.lastUpdated}</p>
           </div>
         </div>
-        <div className="system-card-actions">
+        <div
+          className="system-card-actions"
+          onClick={(e) => e.stopPropagation()}
+        >
           <button onClick={handleFavoriteClick} className="icon-button">
             <StarIcon filled={isFavorite} />
           </button>
@@ -88,6 +95,6 @@ export const SystemCard: React.FC<SystemCardProps> = ({ system, index }) => {
           </button>
         </div>
       </div>
-    </a>
+    </div>
   );
 };
