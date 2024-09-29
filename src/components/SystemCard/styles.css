@@ -11,6 +11,17 @@
   font-family: 'Roboto', sans-serif;
   --card-color: #b0c4de;
   height: 80px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.system-card:active {
+  cursor: grabbing;
+}
+
+.systems-column>div[draggable="true"]:active .system-card {
+  transform: scale(1.02);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  opacity: 0.7;
 }
 
 .system-card:hover {

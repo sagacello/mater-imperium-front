@@ -22,7 +22,6 @@ export const SystemsDashboard: React.FC = () => {
     const newColumns: SystemWithIndex[][] = COLUMN_TITLES.map(() => []);
 
     if (filteredSystems.length === systems.length) {
-      // Lógica de inicialização
       systems.forEach((system, index) => {
         const columnIndex = COLUMN_TITLES.indexOf(system.status);
         if (columnIndex !== -1) {
@@ -30,7 +29,6 @@ export const SystemsDashboard: React.FC = () => {
         }
       });
     } else {
-      // Lógica de filtragem
       filteredSystems.forEach((system) => {
         const columnIndex = COLUMN_TITLES.indexOf(system.status);
         if (columnIndex !== -1) {
@@ -51,6 +49,43 @@ export const SystemsDashboard: React.FC = () => {
     setFilteredSystems(filtered);
   };
 
+  const handleDragStart = (
+    e: React.DragEvent<HTMLDivElement>,
+    columnIndex: number,
+    cardIndex: number,
+  ) => {
+    e.dataTransfer.setData(
+      'text/plain',
+      JSON.stringify({ columnIndex, cardIndex }),
+    );
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (
+    e: React.DragEvent<HTMLDivElement>,
+    targetColumnIndex: number,
+  ) => {
+    e.preventDefault();
+    const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+    const { columnIndex: sourceColumnIndex, cardIndex: sourceCardIndex } = data;
+
+    if (sourceColumnIndex === targetColumnIndex) return;
+
+    const newColumns = [...columns];
+    const [movedCard] = newColumns[sourceColumnIndex].splice(
+      sourceCardIndex,
+      1,
+    );
+
+    movedCard.status = COLUMN_TITLES[targetColumnIndex];
+
+    newColumns[targetColumnIndex].push(movedCard);
+    setColumns(newColumns);
+  };
+
   return (
     <div className="systems-dashboard">
       <Header
@@ -61,14 +96,23 @@ export const SystemsDashboard: React.FC = () => {
       <div className="systems-container">
         <div className="systems-columns">
           {columns.map((columnSystems, columnIndex) => (
-            <div key={columnIndex} className="systems-column">
+            <div
+              key={columnIndex}
+              className="systems-column"
+              onDragOver={handleDragOver}
+              onDrop={(e) => handleDrop(e, columnIndex)}
+            >
               <div className="column-title">{COLUMN_TITLES[columnIndex]}</div>
-              {columnSystems.map((system) => (
-                <SystemCard
+              {columnSystems.map((system, cardIndex) => (
+                <div
                   key={system.index}
-                  system={system}
-                  index={system.index}
-                />
+                  draggable
+                  onDragStart={(e) =>
+                    handleDragStart(e, columnIndex, cardIndex)
+                  }
+                >
+                  <SystemCard system={system} index={system.index} />
+                </div>
               ))}
             </div>
           ))}
