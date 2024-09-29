@@ -61,7 +61,7 @@ export const SystemsDashboard: React.FC = () => {
 
       return updatedColumn.sort((a, b) => {
         if (a.isFavorite === b.isFavorite) {
-          return a.index - b.index;
+          return 0;
         }
         return a.isFavorite ? -1 : 1;
       });
