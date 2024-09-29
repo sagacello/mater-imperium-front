@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import './styles.css';
 import { SystemCardProps } from './types';
 
-export const SystemCard: React.FC<SystemCardProps> = ({ system, index }) => {
-  const [isFavorite, setIsFavorite] = useState(false);
+export const SystemCard: React.FC<SystemCardProps> = ({
+  system,
+  index,
+  onFavoriteToggle,
+}) => {
   const [isChecked, setIsChecked] = useState(false);
-
   const getColor = (index: number) => {
     const colors = ['#FFB6C1', '#ADD8E6', '#90EE90', '#FFD700'];
     return colors[index % colors.length];
@@ -43,21 +45,29 @@ export const SystemCard: React.FC<SystemCardProps> = ({ system, index }) => {
     </svg>
   );
 
-  const handleFavoriteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    setIsFavorite((prevFavorite) => !prevFavorite);
-    e.currentTarget.blur();
-  };
+  const handleFavoriteClick = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      if (onFavoriteToggle) {
+        onFavoriteToggle(system.id, !system.isFavorite);
+      }
+      e.currentTarget.blur();
+    },
+    [onFavoriteToggle, system.id, system.isFavorite],
+  );
 
-  const handleCheckClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    setIsChecked((prevChecked) => !prevChecked);
-    e.currentTarget.blur();
-  };
+  const handleCheckClick = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      setIsChecked((prevChecked) => !prevChecked);
+      e.currentTarget.blur();
+    },
+    [],
+  );
 
-  const handleCardClick = () => {
+  const handleCardClick = useCallback(() => {
     window.open(system.url, '_blank', 'noopener,noreferrer');
-  };
+  }, [system.url]);
 
   return (
     <div
@@ -88,7 +98,7 @@ export const SystemCard: React.FC<SystemCardProps> = ({ system, index }) => {
           onClick={(e) => e.stopPropagation()}
         >
           <button onClick={handleFavoriteClick} className="icon-button">
-            <StarIcon filled={isFavorite} />
+            <StarIcon filled={system.isFavorite} />
           </button>
           <button onClick={handleCheckClick} className="icon-button">
             <CheckIcon checked={isChecked} />

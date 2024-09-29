@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './styles.css';
 import { Header } from '../../components/Header';
 import { SystemCard } from '../../components/SystemCard';
@@ -49,42 +49,69 @@ export const SystemsDashboard: React.FC = () => {
     setFilteredSystems(filtered);
   };
 
-  const handleDragStart = (
-    e: React.DragEvent<HTMLDivElement>,
-    columnIndex: number,
-    cardIndex: number,
-  ) => {
-    e.dataTransfer.setData(
-      'text/plain',
-      JSON.stringify({ columnIndex, cardIndex }),
-    );
+  const handleFavoriteToggle = (systemId: number, isFavorite: boolean) => {
+    const updatedColumns = columns.map((column) => {
+      const updatedColumn = column.map((system) => {
+        if (system.id === systemId) {
+          return { ...system, isFavorite };
+        }
+        return system;
+      });
+
+      return updatedColumn.sort((a, b) => {
+        if (a.isFavorite === b.isFavorite) {
+          return a.index - b.index;
+        }
+        return a.isFavorite ? -1 : 1;
+      });
+    });
+
+    setColumns(updatedColumns);
   };
 
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDragStart = useCallback(
+    (
+      e: React.DragEvent<HTMLDivElement>,
+      columnIndex: number,
+      cardIndex: number,
+    ) => {
+      e.dataTransfer.setData(
+        'text/plain',
+        JSON.stringify({ columnIndex, cardIndex }),
+      );
+    },
+    [],
+  );
+
+  const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-  };
+  }, []);
 
-  const handleDrop = (
-    e: React.DragEvent<HTMLDivElement>,
-    targetColumnIndex: number,
-  ) => {
-    e.preventDefault();
-    const data = JSON.parse(e.dataTransfer.getData('text/plain'));
-    const { columnIndex: sourceColumnIndex, cardIndex: sourceCardIndex } = data;
+  const handleDrop = useCallback(
+    (e: React.DragEvent<HTMLDivElement>, targetColumnIndex: number) => {
+      e.preventDefault();
+      const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+      const { columnIndex: sourceColumnIndex, cardIndex: sourceCardIndex } =
+        data;
 
-    if (sourceColumnIndex === targetColumnIndex) return;
+      if (sourceColumnIndex === targetColumnIndex) return;
 
-    const newColumns = [...columns];
-    const [movedCard] = newColumns[sourceColumnIndex].splice(
-      sourceCardIndex,
-      1,
-    );
+      const newColumns = [...columns];
 
-    movedCard.status = COLUMN_TITLES[targetColumnIndex];
+      const [movedCard] = newColumns[sourceColumnIndex].splice(
+        sourceCardIndex,
+        1,
+      );
 
-    newColumns[targetColumnIndex].push(movedCard);
-    setColumns(newColumns);
-  };
+      movedCard.status = COLUMN_TITLES[targetColumnIndex];
+      movedCard.isFavorite = false;
+
+      newColumns[targetColumnIndex].push(movedCard);
+
+      setColumns(newColumns);
+    },
+    [columns],
+  );
 
   return (
     <div className="systems-dashboard">
@@ -105,13 +132,17 @@ export const SystemsDashboard: React.FC = () => {
               <div className="column-title">{COLUMN_TITLES[columnIndex]}</div>
               {columnSystems.map((system, cardIndex) => (
                 <div
-                  key={system.index}
+                  key={system.id}
                   draggable
                   onDragStart={(e) =>
                     handleDragStart(e, columnIndex, cardIndex)
                   }
                 >
-                  <SystemCard system={system} index={system.index} />
+                  <SystemCard
+                    system={system}
+                    index={system.index}
+                    onFavoriteToggle={handleFavoriteToggle}
+                  />
                 </div>
               ))}
             </div>
