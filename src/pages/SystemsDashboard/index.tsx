@@ -8,6 +8,7 @@ import { Sidebar } from '../../components/SideBar';
 import { ResponsiveSidebar } from '../../components/ResponsiveSidebar';
 import { ModalAddSystem } from '../../components/ModalAddSystem';
 import { ModalExcludeSystems } from '../../components/ModalExcludeSystems';
+import { Footer } from '../../components/Footer';
 import { COLUMN_TITLES } from './constatns';
 
 export const SystemsDashboard: React.FC = () => {
@@ -203,6 +204,7 @@ export const SystemsDashboard: React.FC = () => {
           onDelete={handleDeleteConfirm}
         />
       )}
+      <Footer />
     </div>
   );
 };

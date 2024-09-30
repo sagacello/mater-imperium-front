@@ -1,11 +1,12 @@
 .systems-dashboard {
   background-color: #d4d2d2d8;
-  min-height: 100vh;
+  min-height: calc(90vh - 42px);
   display: flex;
   flex-direction: column;
-  position: relative;
   font-size: 16px;
-  /* Tamanho de font pai padrão para os demais componentes filhos */
+  position: relative;
+  margin-top: 100px;
+  padding-bottom: 40px;
 }
 
 .main-content {
@@ -13,6 +14,7 @@
   flex: 1;
   justify-content: center;
   padding-left: 60px;
+  overflow-y: auto;
 }
 
 .systems-container {
@@ -51,8 +53,18 @@
 }
 
 @media (max-width: 1000px) {
+  .systems-dashboard {
+    margin-top: 100px;
+  }
+}
+
+@media (max-width: 800px) {
   .main-content {
     padding-left: 60;
+  }
+
+  .systems-dashboard {
+    margin-top: 150px;
   }
 
   .systems-container {
@@ -69,8 +81,6 @@
   .systems-columns {
     flex-wrap: wrap;
   }
-
-
 
   .systems-column {
     flex-basis: calc(50% - 13px);
@@ -93,4 +103,11 @@
   .systems-container {
     margin-top: 10px;
   }
+}
+
+.footer {
+  background-color: #000;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
 }
