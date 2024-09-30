@@ -5,8 +5,9 @@ import { SystemCard } from '../../components/SystemCard';
 import { systems } from '../../mocks/mockSystems';
 import { SystemWithIndex } from './types';
 import { Sidebar } from '../../components/SideBar';
-import { COLUMN_TITLES } from './constatns';
 import { ModalAddSystem } from '../../components/ModalAddSystem';
+import { ModalExcludeSystems } from '../../components/ModalExcludeSystems';
+import { COLUMN_TITLES } from './constatns';
 
 export const SystemsDashboard: React.FC = () => {
   const [allSystems, setAllSystems] = useState<SystemWithIndex[]>(
@@ -15,7 +16,9 @@ export const SystemsDashboard: React.FC = () => {
   const [filteredSystems, setFilteredSystems] =
     useState<SystemWithIndex[]>(allSystems);
   const [columns, setColumns] = useState<SystemWithIndex[][]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isExcludeModalOpen, setIsExcludeModalOpen] = useState(false);
+  const [systemToDelete, setSystemToDelete] = useState<number | null>(null);
 
   useEffect(() => {
     updateColumns(filteredSystems);
@@ -110,8 +113,26 @@ export const SystemsDashboard: React.FC = () => {
     setAllSystems(updatedSystems);
     setFilteredSystems(updatedSystems);
     updateColumns(updatedSystems);
-    setIsModalOpen(false);
+    setIsAddModalOpen(false);
   };
+
+  const handleDeleteClick = useCallback((systemId: number) => {
+    setSystemToDelete(systemId);
+    setIsExcludeModalOpen(true);
+  }, []);
+
+  const handleDeleteConfirm = useCallback(() => {
+    if (systemToDelete !== null) {
+      const updatedSystems = allSystems.filter(
+        (system) => system.id !== systemToDelete,
+      );
+      setAllSystems(updatedSystems);
+      setFilteredSystems(updatedSystems);
+      updateColumns(updatedSystems);
+      setIsExcludeModalOpen(false);
+      setSystemToDelete(null);
+    }
+  }, [allSystems, systemToDelete]);
 
   return (
     <div className="systems-dashboard">
@@ -144,6 +165,7 @@ export const SystemsDashboard: React.FC = () => {
                       system={system}
                       index={system.index}
                       onFavoriteToggle={handleFavoriteToggle}
+                      onDeleteClick={handleDeleteClick}
                     />
                   </div>
                 ))}
@@ -151,12 +173,18 @@ export const SystemsDashboard: React.FC = () => {
             ))}
           </div>
         </div>
-        <Sidebar onAddSystem={() => setIsModalOpen(true)} />
+        <Sidebar onAddSystem={() => setIsAddModalOpen(true)} />
       </div>
-      {isModalOpen && (
+      {isAddModalOpen && (
         <ModalAddSystem
-          onClose={() => setIsModalOpen(false)}
+          onClose={() => setIsAddModalOpen(false)}
           onAddSystem={handleAddSystem}
+        />
+      )}
+      {isExcludeModalOpen && (
+        <ModalExcludeSystems
+          onClose={() => setIsExcludeModalOpen(false)}
+          onDelete={handleDeleteConfirm}
         />
       )}
     </div>

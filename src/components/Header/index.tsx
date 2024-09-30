@@ -61,7 +61,7 @@ export const Header: React.FC<HeaderProps> = ({
           <span className="user-name">{username}</span>
         </div>
         <div className="header-center">
-          <h1>Dashboard</h1>
+          <h1>Painel de Sistemas</h1>
         </div>
         <div className="header-right">
           <span className="time">{formatTime(dateTime)}</span>

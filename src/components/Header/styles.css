@@ -19,7 +19,7 @@
   flex-direction: column;
   align-items: center;
   margin-top: 6px;
-  margin-left: 30px;
+  margin-left: 60px;
 }
 
 .avatar {
@@ -31,6 +31,8 @@
 .header-center {
   flex-grow: 1;
   text-align: center;
+  margin-left: 60px;
+  margin-top: 14px;
 }
 
 .header-center h1 {
@@ -69,6 +71,7 @@
   border-bottom: 1px solid #ecf0f3d5;
   font-size: 0.9em;
   margin-left: auto;
+  margin-top: 4px;
 }
 
 .search-bar input {

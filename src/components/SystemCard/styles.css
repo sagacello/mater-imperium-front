@@ -10,7 +10,7 @@
   color: #2c3e50;
   font-family: 'Roboto', sans-serif;
   --card-color: #b0c4de;
-  height: 80px;
+  height: 120px;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
@@ -55,6 +55,7 @@
   margin-right: 20px;
   flex-shrink: 0;
   background-color: var(--card-color);
+
 }
 
 .system-card-details {
@@ -85,6 +86,7 @@
   border-left: 1px solid #e0e0e0;
   margin-left: 15px;
   cursor: default;
+  padding-top: 4px;
 }
 
 .icon-button {
@@ -92,9 +94,8 @@
   border: none;
   cursor: pointer;
   padding: 5px;
-  margin: 5px 0;
+  margin: 2px 0;
   transition: color 0.2s;
-  cursor: pointer;
 }
 
 .icon-button svg {

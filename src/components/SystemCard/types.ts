@@ -8,4 +8,5 @@ export interface SystemCardProps {
   };
   index: number;
   onFavoriteToggle?: (id: number, isFavorite: boolean) => void;
+  onDeleteClick: (systemId: number) => void;
 }
