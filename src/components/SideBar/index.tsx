@@ -1,28 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './styles.css';
+import { ModalAddSystem } from '../ModalAddSystem';
 
 const HomeIcon = ({ filled }: { filled: boolean }) => (
   <svg
-    width="24"
-    height="24"
+    width="26"
+    height="26"
     viewBox="0 0 24 24"
-    fill={filled ? 'var(--card-color)' : 'none'}
-    stroke={filled ? 'var(--card-color)' : 'currentColor'}
+    fill="none"
+    stroke={filled ? '#bdc3c7' : 'currentColor'}
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
   >
-    <path d="M3 12L12 3l9 9M9 21V9h6v12" />
+    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+    <polyline points="9 22 9 12 15 12 15 22" />
   </svg>
 );
 
 const PlusIcon = ({ filled }: { filled: boolean }) => (
   <svg
-    width="24"
-    height="24"
+    className="plus-icon"
+    width="26"
+    height="26"
     viewBox="0 0 24 24"
-    fill={filled ? 'var(--card-color)' : 'none'}
-    stroke={filled ? 'var(--card-color)' : 'currentColor'}
+    fill="none"
+    stroke={filled ? '#bdc3c7' : 'currentColor'}
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
@@ -34,14 +37,22 @@ const PlusIcon = ({ filled }: { filled: boolean }) => (
 );
 
 export const Sidebar: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
-    <div className="sidebar">
-      <div className="icon">
-        <HomeIcon filled={true} />
+    <>
+      <div className="sidebar">
+        <div className="icon">
+          <HomeIcon filled={true} />
+        </div>
+        <div className="icon" onClick={openModal}>
+          <PlusIcon filled={true} />
+        </div>
       </div>
-      <div className="icon">
-        <PlusIcon filled={false} />
-      </div>
-    </div>
+      {isModalOpen && <ModalAddSystem onClose={closeModal} />}
+    </>
   );
 };
