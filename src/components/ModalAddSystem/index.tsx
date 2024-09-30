@@ -5,13 +5,21 @@ interface ModalProps {
   onClose: () => void;
 }
 
+const statuses = [
+  'Projeto finalizado',
+  'Projeto em andamento',
+  'Projeto parado',
+  'Projeto atrasado',
+];
+
 export const ModalAddSystem: React.FC<ModalProps> = ({ onClose }) => {
   const [name, setName] = useState('');
   const [url, setUrl] = useState('');
+  const [status, setStatus] = useState(statuses[0]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Novo card:', { name, url });
+    console.log('Novo card:', { name, url, status });
     onClose();
   };
 
@@ -19,6 +27,19 @@ export const ModalAddSystem: React.FC<ModalProps> = ({ onClose }) => {
     <div className="modal-overlay">
       <div className="modal-content">
         <h2>Adicionar Novo Sistema</h2>
+        <div className="dropdown">
+          <select
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            className="dropdown-select"
+          >
+            {statuses.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+        </div>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <input

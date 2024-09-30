@@ -45,10 +45,14 @@ export const Sidebar: React.FC = () => {
   return (
     <>
       <div className="sidebar">
-        <div className="icon">
+        <div className="icon" data-tooltip="Navegar para home">
           <HomeIcon filled={true} />
         </div>
-        <div className="icon" onClick={openModal}>
+        <div
+          className="icon"
+          data-tooltip="Adicionar novo sistema"
+          onClick={openModal}
+        >
           <PlusIcon filled={true} />
         </div>
       </div>
