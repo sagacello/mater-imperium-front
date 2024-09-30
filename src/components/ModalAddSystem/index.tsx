@@ -1,30 +1,40 @@
 import React, { useState } from 'react';
 import './styles.css';
+import { ModalProps, SystemWithIndex } from './types';
+import { COLUMN_TITLES } from './constants';
 
-interface ModalProps {
-  onClose: () => void;
-}
-
-const statuses = [
-  'Projeto finalizado',
-  'Projeto em andamento',
-  'Projeto parado',
-  'Projeto atrasado',
-];
-
-export const ModalAddSystem: React.FC<ModalProps> = ({ onClose }) => {
+export const ModalAddSystem: React.FC<ModalProps> = ({
+  onClose,
+  onAddSystem,
+}) => {
   const [name, setName] = useState('');
   const [url, setUrl] = useState('');
-  const [status, setStatus] = useState(statuses[0]);
+  const [status, setStatus] = useState(COLUMN_TITLES[0]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Novo card:', { name, url, status });
+    const newSystem: SystemWithIndex = {
+      id: Date.now(),
+      name,
+      url,
+      lastUpdated: '0m',
+      status,
+      isFavorite: false,
+      index: 0,
+    };
+    onAddSystem(newSystem);
     onClose();
   };
 
+  const handleClickOutside = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.classList.contains('modal-overlay')) {
+      onClose();
+    }
+  };
+
   return (
-    <div className="modal-overlay">
+    <div className="modal-overlay" onClick={handleClickOutside}>
       <div className="modal-content">
         <h2>Adicionar Novo Sistema</h2>
         <div className="dropdown">
@@ -33,9 +43,9 @@ export const ModalAddSystem: React.FC<ModalProps> = ({ onClose }) => {
             onChange={(e) => setStatus(e.target.value)}
             className="dropdown-select"
           >
-            {statuses.map((s) => (
-              <option key={s} value={s}>
-                {s}
+            {COLUMN_TITLES.map((columnTitle) => (
+              <option key={columnTitle} value={columnTitle}>
+                {columnTitle}
               </option>
             ))}
           </select>

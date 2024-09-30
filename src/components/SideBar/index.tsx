@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './styles.css';
-import { ModalAddSystem } from '../ModalAddSystem';
 
 const HomeIcon = ({ filled }: { filled: boolean }) => (
   <svg
@@ -36,27 +35,23 @@ const PlusIcon = ({ filled }: { filled: boolean }) => (
   </svg>
 );
 
-export const Sidebar: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+interface SidebarProps {
+  onAddSystem: () => void;
+}
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
-
+export const Sidebar: React.FC<SidebarProps> = ({ onAddSystem }) => {
   return (
-    <>
-      <div className="sidebar">
-        <div className="icon" data-tooltip="Navegar para home">
-          <HomeIcon filled={true} />
-        </div>
-        <div
-          className="icon"
-          data-tooltip="Adicionar novo sistema"
-          onClick={openModal}
-        >
-          <PlusIcon filled={true} />
-        </div>
+    <div className="sidebar">
+      <div className="icon" data-tooltip="Navegar para home">
+        <HomeIcon filled={true} />
       </div>
-      {isModalOpen && <ModalAddSystem onClose={closeModal} />}
-    </>
+      <div
+        className="icon"
+        data-tooltip="Adicionar novo sistema"
+        onClick={onAddSystem}
+      >
+        <PlusIcon filled={true} />
+      </div>
+    </div>
   );
 };

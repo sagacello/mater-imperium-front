@@ -57,6 +57,7 @@
   transition: background-color 0.3s;
 }
 
+
 .dropdown-select:hover,
 .dropdown-select:focus {
   background-color: #34495e;
@@ -87,10 +88,11 @@
   position: absolute;
   top: 0.7em;
   left: 0;
-  font-size: 1em;
+  font-size: 0.9em;
   color: #bdc3c7;
   pointer-events: none;
   transition: all 0.3s ease;
+  font-family: 'Roboto', sans-serif;
 }
 
 .form-group input:focus~label,
@@ -98,6 +100,7 @@
   top: -1.5em;
   font-size: 0.8em;
   color: #3498db;
+
 }
 
 .form-group input::placeholder {

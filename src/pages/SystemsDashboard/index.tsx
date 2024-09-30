@@ -5,69 +5,53 @@ import { SystemCard } from '../../components/SystemCard';
 import { systems } from '../../mocks/mockSystems';
 import { SystemWithIndex } from './types';
 import { Sidebar } from '../../components/SideBar';
-
-const COLUMN_TITLES = [
-  'Projetos finalizados',
-  'Projetos em andamento',
-  'Projetos parados',
-  'Projetos atrasados',
-];
+import { COLUMN_TITLES } from './constatns';
+import { ModalAddSystem } from '../../components/ModalAddSystem';
 
 export const SystemsDashboard: React.FC = () => {
-  const [filteredSystems, setFilteredSystems] = useState<SystemWithIndex[]>(
+  const [allSystems, setAllSystems] = useState<SystemWithIndex[]>(
     systems.map((system, index) => ({ ...system, index: index + 1 })),
   );
+  const [filteredSystems, setFilteredSystems] =
+    useState<SystemWithIndex[]>(allSystems);
   const [columns, setColumns] = useState<SystemWithIndex[][]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    const newColumns: SystemWithIndex[][] = COLUMN_TITLES.map(() => []);
-
-    if (filteredSystems.length === systems.length) {
-      systems.forEach((system, index) => {
-        const columnIndex = COLUMN_TITLES.indexOf(system.status);
-        if (columnIndex !== -1) {
-          newColumns[columnIndex].push({ ...system, index: index + 1 });
-        }
-      });
-    } else {
-      filteredSystems.forEach((system) => {
-        const columnIndex = COLUMN_TITLES.indexOf(system.status);
-        if (columnIndex !== -1) {
-          newColumns[columnIndex].push(system);
-        }
-      });
-    }
-
-    setColumns(newColumns);
+    updateColumns(filteredSystems);
   }, [filteredSystems]);
 
-  const handleSearch = (searchTerm: string) => {
-    const filtered = systems
-      .map((system, index) => ({ ...system, index: index + 1 }))
-      .filter((system) =>
-        system.name.toLowerCase().includes(searchTerm.toLowerCase()),
-      );
-    setFilteredSystems(filtered);
+  const updateColumns = (systems: SystemWithIndex[]) => {
+    const newColumns: SystemWithIndex[][] = COLUMN_TITLES.map(() => []);
+    systems.forEach((system) => {
+      const columnIndex = COLUMN_TITLES.indexOf(system.status);
+      if (columnIndex !== -1) {
+        newColumns[columnIndex].push(system);
+      }
+    });
+    newColumns.forEach((column) => {
+      column.sort((a, b) => (b.isFavorite ? 1 : 0) - (a.isFavorite ? 1 : 0));
+    });
+    setColumns(newColumns);
   };
 
+  const handleSearch = useCallback(
+    (searchTerm: string) => {
+      const filtered = allSystems.filter((system) =>
+        system.name.toLowerCase().includes(searchTerm.toLowerCase()),
+      );
+      setFilteredSystems(filtered);
+    },
+    [allSystems],
+  );
+
   const handleFavoriteToggle = (systemId: number, isFavorite: boolean) => {
-    const updatedColumns = columns.map((column) => {
-      const updatedColumn = column.map((system) => {
-        if (system.id === systemId) {
-          return { ...system, isFavorite };
-        }
-        return system;
-      });
-
-      return updatedColumn.sort((a, b) => {
-        if (a.isFavorite === b.isFavorite) {
-          return 0;
-        }
-        return a.isFavorite ? -1 : 1;
-      });
-    });
-
-    setColumns(updatedColumns);
+    const updatedSystems = allSystems.map((system) =>
+      system.id === systemId ? { ...system, isFavorite } : system,
+    );
+    setAllSystems(updatedSystems);
+    setFilteredSystems(updatedSystems);
+    updateColumns(updatedSystems);
   };
 
   const handleDragStart = useCallback(
@@ -98,21 +82,36 @@ export const SystemsDashboard: React.FC = () => {
       if (sourceColumnIndex === targetColumnIndex) return;
 
       const newColumns = [...columns];
-
       const [movedCard] = newColumns[sourceColumnIndex].splice(
         sourceCardIndex,
         1,
       );
-
       movedCard.status = COLUMN_TITLES[targetColumnIndex];
       movedCard.isFavorite = false;
-
       newColumns[targetColumnIndex].push(movedCard);
 
       setColumns(newColumns);
+      updateAllSystems(newColumns);
     },
     [columns],
   );
+
+  const updateAllSystems = (newColumns: SystemWithIndex[][]) => {
+    const updatedSystems = newColumns.flat();
+    setAllSystems(updatedSystems);
+    setFilteredSystems(updatedSystems);
+  };
+
+  const handleAddSystem = (newSystem: SystemWithIndex) => {
+    const updatedSystems = [
+      ...allSystems,
+      { ...newSystem, index: allSystems.length + 1 },
+    ];
+    setAllSystems(updatedSystems);
+    setFilteredSystems(updatedSystems);
+    updateColumns(updatedSystems);
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="systems-dashboard">
@@ -152,8 +151,14 @@ export const SystemsDashboard: React.FC = () => {
             ))}
           </div>
         </div>
-        <Sidebar />
+        <Sidebar onAddSystem={() => setIsModalOpen(true)} />
       </div>
+      {isModalOpen && (
+        <ModalAddSystem
+          onClose={() => setIsModalOpen(false)}
+          onAddSystem={handleAddSystem}
+        />
+      )}
     </div>
   );
 };
