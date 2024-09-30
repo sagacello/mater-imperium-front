@@ -54,11 +54,11 @@ export const ResponsiveSidebar: React.FC<ResponsiveSidebarProps> = ({
       </div>
       {isOpen && (
         <div className="menu-items">
-          <div className="respnsive-icon" data-tooltip="Navegar para home">
+          <div className="responsive-icon" data-tooltip="Navegar para home">
             <HomeIcon filled={true} />
           </div>
           <div
-            className="icon"
+            className="responsive-icon"
             data-tooltip="Adicionar novo sistema"
             onClick={onAddSystem}
           >

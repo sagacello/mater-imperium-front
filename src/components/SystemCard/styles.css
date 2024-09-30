@@ -113,3 +113,40 @@
 .icon-button:focus svg {
   color: var(--card-color);
 }
+
+@media (max-width: 600px) {
+  .system-card {
+    height: 92px;
+    padding: 8px;
+    font-size: 0.9em;
+  }
+
+  .system-card-index {
+    width: 30px;
+    height: 30px;
+    font-size: 1em;
+    margin-right: 20px;
+  }
+
+  .system-card h2 {
+    font-size: 1.2em;
+  }
+
+  .system-card p {
+    font-size: 1em;
+  }
+
+  .system-card-actions {
+    padding-left: 10px;
+    margin-left: 10px;
+  }
+
+  .icon-button {
+    padding: 4px;
+  }
+
+  .icon-button svg {
+    width: 16px;
+    height: 16px;
+  }
+}

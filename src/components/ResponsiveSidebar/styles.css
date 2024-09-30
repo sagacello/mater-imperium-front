@@ -42,26 +42,27 @@
   transform: scaleY(1);
 }
 
-.respnsive-icon {
-  color: #65788b;
-  margin: 10px 0;
+.responsive-icon {
+  color: #ffffff;
   cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 10px;
   position: relative;
 }
 
-.respnsive-icon svg {
+.responsive-icon svg {
   transition: stroke 0.3s ease, fill 0.3s ease;
 }
 
-.respnsive-icon:hover svg {
+.responsive-icon:hover svg {
   stroke: #ffffff;
 }
 
-.respnsive-icon[data-tooltip]:hover::before {
+.responsive-icon[data-tooltip]:hover::before {
   content: attr(data-tooltip);
   position: absolute;
-  bottom: 100%;
-  left: 200%;
+  bottom: 10%;
+  left: 440%;
   transform: translateX(-50%);
   background-color: #33333395;
   color: #fff;
