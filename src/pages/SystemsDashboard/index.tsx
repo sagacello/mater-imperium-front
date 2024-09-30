@@ -5,6 +5,7 @@ import { SystemCard } from '../../components/SystemCard';
 import { systems } from '../../mocks/mockSystems';
 import { SystemWithIndex } from './types';
 import { Sidebar } from '../../components/SideBar';
+import { ResponsiveSidebar } from '../../components/ResponsiveSidebar';
 import { ModalAddSystem } from '../../components/ModalAddSystem';
 import { ModalExcludeSystems } from '../../components/ModalExcludeSystems';
 import { COLUMN_TITLES } from './constatns';
@@ -19,6 +20,14 @@ export const SystemsDashboard: React.FC = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isExcludeModalOpen, setIsExcludeModalOpen] = useState(false);
   const [systemToDelete, setSystemToDelete] = useState<number | null>(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     updateColumns(filteredSystems);
@@ -141,7 +150,6 @@ export const SystemsDashboard: React.FC = () => {
         username="Usuário"
         onSearch={handleSearch}
       />
-
       <div className="main-content">
         <div className="systems-container">
           <div className="systems-columns">
@@ -173,7 +181,15 @@ export const SystemsDashboard: React.FC = () => {
             ))}
           </div>
         </div>
-        <Sidebar onAddSystem={() => setIsAddModalOpen(true)} />
+        {windowWidth < 600 ? (
+          <ResponsiveSidebar
+            onAddSystem={() => setIsAddModalOpen(true)}
+            isOpen={isSidebarOpen}
+            toggleMenu={() => setIsSidebarOpen(!isSidebarOpen)}
+          />
+        ) : (
+          <Sidebar onAddSystem={() => setIsAddModalOpen(true)} />
+        )}
       </div>
       {isAddModalOpen && (
         <ModalAddSystem

@@ -96,6 +96,13 @@ export const SystemCard: React.FC<SystemCardProps> = ({
     window.open(system.url, '_blank', 'noopener,noreferrer');
   }, [system.url]);
 
+  const formatName = (name: string) => {
+    if (name.length > 30) {
+      return name.slice(0, 20) + '\n' + name.slice(20, 30) + '...';
+    }
+    return name;
+  };
+
   return (
     <div
       className="system-card"
@@ -116,7 +123,7 @@ export const SystemCard: React.FC<SystemCardProps> = ({
             {index}
           </div>
           <div className="system-card-details">
-            <h2>{system.name}</h2>
+            <h2 className="system-card-title">{formatName(system.name)}</h2>
             <p>Última atualização: {system.lastUpdated}</p>
           </div>
         </div>

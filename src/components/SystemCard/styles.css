@@ -46,16 +46,22 @@
 .system-card-index {
   font-weight: bold;
   color: #fff;
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  margin-right: 20px;
+  margin-right: 14px;
   flex-shrink: 0;
+  margin-left: 2px;
   background-color: var(--card-color);
+}
 
+.system-card-title {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-width: 100%;
 }
 
 .system-card-details {

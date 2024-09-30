@@ -7,7 +7,7 @@ import { Route } from '@tanstack/react-router';
 import { SystemsDashboard } from './pages/SystemsDashboard';
 
 const DashboardPathRoute = DashboardRoute.update({
-  path: '/dashboard',
+  path: '/painel-de-sistemas',
   getParentRoute: () => rootRoute,
 });
 

@@ -15,9 +15,9 @@
 
 .icon {
   color: #65788b;
-  margin: 30px 0;
   cursor: pointer;
   position: relative;
+  margin-top: 50px;
 }
 
 .icon svg {
@@ -51,7 +51,7 @@
 }
 
 
-@media (max-width: 1000px) {
+@media (max-width: 600px) {
   .sidebar {
     transform: translateX(-100%);
   }
