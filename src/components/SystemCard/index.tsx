@@ -1,10 +1,17 @@
-import React, { useState, useCallback } from 'react';
+import React, {
+  useState,
+  useCallback,
+  KeyboardEvent,
+  useEffect,
+  useRef,
+} from 'react';
 import './styles.css';
 import { SystemCardProps } from './types';
 import StarIcon from './icons/StarIcon';
 import CheckIcon from './icons/CheckIcon';
 import TrashIcon from './icons/TrashIcon';
 import EditIcon from './icons/EditIcon';
+import { colors } from './constants';
 
 export const SystemCard: React.FC<SystemCardProps> = ({
   system,
@@ -16,9 +23,16 @@ export const SystemCard: React.FC<SystemCardProps> = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedName, setEditedName] = useState(system.name);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (isEditing && inputRef.current) {
+      inputRef.current.focus();
+      inputRef.current.setSelectionRange(0, inputRef.current.value.length);
+    }
+  }, [isEditing]);
 
   const getColor = (index: number) => {
-    const colors = ['#FFB6C1', '#ADD8E6', '#90EE90', '#FFD700'];
     return colors[index % colors.length];
   };
 
@@ -57,8 +71,9 @@ export const SystemCard: React.FC<SystemCardProps> = ({
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
       setIsEditing(true);
+      setEditedName(system.name);
     },
-    [],
+    [system.name],
   );
 
   const isValidName = (name: string) => {
@@ -76,11 +91,26 @@ export const SystemCard: React.FC<SystemCardProps> = ({
     [],
   );
 
+  const confirmEdit = () => {
+    setIsEditing(false);
+    if (onNameChange && editedName.trim() !== '') {
+      onNameChange(system.id, editedName.trim());
+    }
+  };
+
   const handleConfirmEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    setIsEditing(false);
-    if (onNameChange) {
-      onNameChange(system.id, editedName);
+    confirmEdit();
+    e.currentTarget.blur();
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      confirmEdit();
+    } else if (e.key === 'Escape') {
+      setIsEditing(false);
+      setEditedName(system.name);
     }
   };
 
@@ -124,10 +154,11 @@ export const SystemCard: React.FC<SystemCardProps> = ({
                   Confirmar
                 </button>
                 <input
+                  ref={inputRef}
                   type="text"
                   value={editedName}
                   onChange={handleNameChange}
-                  autoFocus
+                  onKeyDown={handleKeyDown}
                   className="system-card-input"
                 />
               </>
