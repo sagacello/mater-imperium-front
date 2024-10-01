@@ -8,16 +8,24 @@ import { Sidebar } from '../../components/SideBar';
 import { ModalAddSystem } from '../../components/ModalAddSystem';
 import { ModalExcludeSystems } from '../../components/ModalExcludeSystems';
 import { Footer } from '../../components/Footer';
-import { COLUMN_TITLES } from './constatns';
 import { ResponsiveSidebar } from '../../components/ResponsiveSidebar';
+import { COLUMN_TITLES } from '../../hooks/constatns';
+import { useSystems } from '../../hooks/useSystems';
+import { useDragAndDrop } from '../../hooks/useDragAndDrop';
 
 export const SystemsDashboard: React.FC = () => {
-  const [allSystems, setAllSystems] = useState<SystemWithIndex[]>(
+  const {
+    allSystems,
+    columns,
+    handleSearch,
+    handleFavoriteToggle,
+    setAllSystems,
+    setFilteredSystems,
+    setColumns,
+  } = useSystems(
     systems.map((system, index) => ({ ...system, index: index + 1 })),
   );
-  const [filteredSystems, setFilteredSystems] =
-    useState<SystemWithIndex[]>(allSystems);
-  const [columns, setColumns] = useState<SystemWithIndex[][]>([]);
+
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isExcludeModalOpen, setIsExcludeModalOpen] = useState(false);
   const [systemToDelete, setSystemToDelete] = useState<number | null>(null);
@@ -29,107 +37,32 @@ export const SystemsDashboard: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  useEffect(() => {
-    updateColumns(filteredSystems);
-  }, [filteredSystems]);
-
-  const updateColumns = (systems: SystemWithIndex[]) => {
-    const newColumns: SystemWithIndex[][] = COLUMN_TITLES.map(() => []);
-    systems.forEach((system) => {
-      const columnIndex = COLUMN_TITLES.indexOf(system.status);
-      if (columnIndex !== -1) {
-        newColumns[columnIndex].push(system);
-      }
-    });
-    newColumns.forEach((column) => {
-      column.sort((a, b) => (b.isFavorite ? 1 : 0) - (a.isFavorite ? 1 : 0));
-    });
-    setColumns(newColumns);
-  };
-
-  const handleSearch = useCallback(
-    (searchTerm: string) => {
-      const filtered = allSystems.filter((system) => {
-        const nameMatch = system.name
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase());
-        const lastUpdatedMatch = system.lastUpdated
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase());
-
-        return nameMatch || lastUpdatedMatch;
-      });
-
-      setFilteredSystems(filtered);
+  const { handleDragStart, handleDragOver, handleDrop } = useDragAndDrop(
+    columns,
+    (updatedSystems) => {
+      setAllSystems(updatedSystems);
+      setFilteredSystems(updatedSystems);
     },
-    [allSystems],
   );
-
-  const handleFavoriteToggle = (systemId: number, isFavorite: boolean) => {
-    const updatedSystems = allSystems.map((system) =>
-      system.id === systemId ? { ...system, isFavorite } : system,
-    );
-    setAllSystems(updatedSystems);
-    setFilteredSystems(updatedSystems);
-    updateColumns(updatedSystems);
-  };
-
-  const handleDragStart = useCallback(
-    (
-      e: React.DragEvent<HTMLDivElement>,
-      columnIndex: number,
-      cardIndex: number,
-    ) => {
-      e.dataTransfer.setData(
-        'text/plain',
-        JSON.stringify({ columnIndex, cardIndex }),
-      );
-    },
-    [],
-  );
-
-  const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-  }, []);
-
-  const handleDrop = useCallback(
-    (e: React.DragEvent<HTMLDivElement>, targetColumnIndex: number) => {
-      e.preventDefault();
-      const data = JSON.parse(e.dataTransfer.getData('text/plain'));
-      const { columnIndex: sourceColumnIndex, cardIndex: sourceCardIndex } =
-        data;
-
-      if (sourceColumnIndex === targetColumnIndex) return;
-
-      const newColumns = [...columns];
-      const [movedCard] = newColumns[sourceColumnIndex].splice(
-        sourceCardIndex,
-        1,
-      );
-      movedCard.status = COLUMN_TITLES[targetColumnIndex];
-      movedCard.isFavorite = false;
-      newColumns[targetColumnIndex].push(movedCard);
-
-      setColumns(newColumns);
-      updateAllSystems(newColumns);
-    },
-    [columns],
-  );
-
-  const updateAllSystems = (newColumns: SystemWithIndex[][]) => {
-    const updatedSystems = newColumns.flat();
-    setAllSystems(updatedSystems);
-    setFilteredSystems(updatedSystems);
-  };
 
   const handleAddSystem = (newSystem: SystemWithIndex) => {
     const updatedSystems = [
       ...allSystems,
       { ...newSystem, index: allSystems.length + 1 },
     ];
+
     setAllSystems(updatedSystems);
     setFilteredSystems(updatedSystems);
-    updateColumns(updatedSystems);
+
+    const updatedColumns: SystemWithIndex[][] = COLUMN_TITLES.map(() => []);
+    updatedSystems.forEach((system) => {
+      const columnIndex = COLUMN_TITLES.indexOf(system.status);
+      if (columnIndex !== -1) {
+        updatedColumns[columnIndex].push(system);
+      }
+    });
+    setColumns(updatedColumns);
+
     setIsAddModalOpen(false);
   };
 
@@ -139,7 +72,15 @@ export const SystemsDashboard: React.FC = () => {
     );
     setAllSystems(updatedSystems);
     setFilteredSystems(updatedSystems);
-    updateColumns(updatedSystems);
+
+    const updatedColumns: SystemWithIndex[][] = COLUMN_TITLES.map(() => []);
+    updatedSystems.forEach((system) => {
+      const columnIndex = COLUMN_TITLES.indexOf(system.status);
+      if (columnIndex !== -1) {
+        updatedColumns[columnIndex].push(system);
+      }
+    });
+    setColumns(updatedColumns);
   };
 
   const handleDeleteClick = useCallback((systemId: number) => {
@@ -154,11 +95,26 @@ export const SystemsDashboard: React.FC = () => {
       );
       setAllSystems(updatedSystems);
       setFilteredSystems(updatedSystems);
-      updateColumns(updatedSystems);
+
+      const updatedColumns: SystemWithIndex[][] = COLUMN_TITLES.map(() => []);
+      updatedSystems.forEach((system) => {
+        const columnIndex = COLUMN_TITLES.indexOf(system.status);
+        if (columnIndex !== -1) {
+          updatedColumns[columnIndex].push(system);
+        }
+      });
+      setColumns(updatedColumns);
+
       setIsExcludeModalOpen(false);
       setSystemToDelete(null);
     }
-  }, [allSystems, systemToDelete]);
+  }, [
+    systemToDelete,
+    allSystems,
+    setAllSystems,
+    setFilteredSystems,
+    setColumns,
+  ]);
 
   return (
     <div className="systems-dashboard">
