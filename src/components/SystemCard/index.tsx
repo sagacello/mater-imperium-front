@@ -1,6 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import './styles.css';
 import { SystemCardProps } from './types';
+import StarIcon from './icons/StarIcon';
+import CheckIcon from './icons/CheckIcon';
+import TrashIcon from './icons/TrashIcon';
+import EditIcon from './icons/EditIcon';
 
 export const SystemCard: React.FC<SystemCardProps> = ({
   system,
@@ -8,59 +12,17 @@ export const SystemCard: React.FC<SystemCardProps> = ({
   onFavoriteToggle,
   onDeleteClick,
   onCardClick,
+  onNameChange,
 }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedName, setEditedName] = useState(system.name);
+
   const getColor = (index: number) => {
     const colors = ['#FFB6C1', '#ADD8E6', '#90EE90', '#FFD700'];
     return colors[index % colors.length];
   };
 
   const cardColor = getColor(index);
-
-  const StarIcon = ({ filled }: { filled: boolean }) => (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill={filled ? 'var(--card-color)' : 'none'}
-      stroke={filled ? 'var(--card-color)' : 'currentColor'}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-    </svg>
-  );
-
-  const CheckIcon = ({ checked }: { checked: boolean }) => (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke={checked ? 'var(--card-color)' : 'currentColor'}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polyline points="20 6 9 17 4 12" />
-    </svg>
-  );
-
-  const TrashIcon = () => (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polyline points="3 6 5 6 21 6" />
-      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-    </svg>
-  );
 
   const handleFavoriteClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -91,10 +53,43 @@ export const SystemCard: React.FC<SystemCardProps> = ({
     [system.id, onDeleteClick],
   );
 
+  const handleEditClick = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      setIsEditing(true);
+    },
+    [],
+  );
+
+  const isValidName = (name: string) => {
+    const regex = /^[a-zA-Z0-9 .]*$/;
+    return regex.test(name);
+  };
+
+  const handleNameChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newName = e.target.value;
+      if (isValidName(newName) || newName === '') {
+        setEditedName(newName);
+      }
+    },
+    [],
+  );
+
+  const handleConfirmEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setIsEditing(false);
+    if (onNameChange) {
+      onNameChange(system.id, editedName);
+    }
+  };
+
   const handleCardClick = useCallback(() => {
-    window.open(system.url, '_blank', 'noopener,noreferrer');
-    onCardClick(system.id);
-  }, [system.url, onCardClick, system.id]);
+    if (!isEditing) {
+      window.open(system.url, '_blank', 'noopener,noreferrer');
+      onCardClick(system.id);
+    }
+  }, [system.url, onCardClick, system.id, isEditing]);
 
   const formatName = (name: string) => {
     if (name.length > 30) {
@@ -110,7 +105,7 @@ export const SystemCard: React.FC<SystemCardProps> = ({
       style={
         {
           '--card-color': cardColor,
-          cursor: 'pointer',
+          cursor: isEditing ? 'default' : 'pointer',
         } as React.CSSProperties
       }
     >
@@ -123,7 +118,27 @@ export const SystemCard: React.FC<SystemCardProps> = ({
             {index}
           </div>
           <div className="system-card-details">
-            <h2 className="system-card-title">{formatName(system.name)}</h2>
+            {isEditing ? (
+              <>
+                <button onClick={handleConfirmEdit} className="confirm-button">
+                  Confirmar
+                </button>
+                <input
+                  type="text"
+                  value={editedName}
+                  onChange={handleNameChange}
+                  autoFocus
+                  className="system-card-input"
+                />
+              </>
+            ) : (
+              <>
+                <button onClick={handleEditClick} className="icon-button">
+                  <EditIcon />
+                </button>
+                <h2 className="system-card-title">{formatName(system.name)}</h2>
+              </>
+            )}
             <p>Última atualização: {system.lastUpdated}</p>
           </div>
         </div>

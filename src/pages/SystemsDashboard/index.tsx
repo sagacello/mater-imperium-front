@@ -116,6 +116,14 @@ export const SystemsDashboard: React.FC = () => {
     setColumns,
   ]);
 
+  const handleNameChange = (systemId: number, newName: string) => {
+    const updatedSystems = allSystems.map((system) =>
+      system.id === systemId ? { ...system, name: newName } : system,
+    );
+    setAllSystems(updatedSystems);
+    setFilteredSystems(updatedSystems);
+  };
+
   return (
     <div className="systems-dashboard">
       <Header
@@ -151,6 +159,7 @@ export const SystemsDashboard: React.FC = () => {
                       onFavoriteToggle={handleFavoriteToggle}
                       onDeleteClick={handleDeleteClick}
                       onCardClick={handleCardClick}
+                      onNameChange={handleNameChange}
                     />
                   </div>
                 ))}

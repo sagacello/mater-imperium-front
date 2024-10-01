@@ -6,4 +6,5 @@ export interface SystemCardProps {
   onFavoriteToggle?: (id: number, isFavorite: boolean) => void;
   onDeleteClick: (systemId: number) => void;
   onCardClick: (systemId: number) => void;
+  onNameChange: (id: number, newName: string) => void; // Tipagem mais específica
 }
