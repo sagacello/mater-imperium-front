@@ -9,8 +9,7 @@ https://mater-imperium-front-jumb.vercel.app/
 ## Visão Geral
 
 Aplicação web desenvolvida em React com Vite e TypeScript. Inspirado pelo design
-funcional apresentado em
-[Dribbble](https://github.com/sagacello/mater-imperium-front/blob/main/AcessoSistemas.jpg).
+funcional apresentado em https://dribbble.com/shots/2084101-Dashboard-Overview/attachments/374756
 
 ## Funcionalidades Principais
 
