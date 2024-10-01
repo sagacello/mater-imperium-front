@@ -24,6 +24,8 @@ funcional apresentado em
 - **Totalmente Responsivo**: O sistema se adapta perfeitamente a diferentes
   tamanhos de tela, garantindo uma experiência consistente em dispositivos
   desktop e móveis.
+- **Filtragem de Sistemas**: Funcionalidade que permite filtrar os sistemas de
+  acordo com critérios específicos.
 
 ## Principais Tecnologias Utilizadas
 
