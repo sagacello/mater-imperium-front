@@ -30,7 +30,7 @@ export const Footer: React.FC = () => {
           className="circle"
           style={{ backgroundColor: 'rgb(173, 216, 230)' }}
         ></div>
-        <span>Preparados para apresentação</span>
+        <span>Preparado para apresentação</span>
       </div>
     </footer>
   );

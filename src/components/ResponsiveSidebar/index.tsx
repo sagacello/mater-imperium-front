@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './styles.css';
 import { ResponsiveSidebarProps } from './types';
 
 const HomeIcon = ({ filled }: { filled: boolean }) => (
   <svg
-    width="20"
-    height="20"
+    width="17"
+    height="17"
     viewBox="0 0 24 24"
     fill="none"
     stroke={filled ? '#bdc3c7' : 'currentColor'}
@@ -21,8 +21,8 @@ const HomeIcon = ({ filled }: { filled: boolean }) => (
 const PlusIcon = ({ filled }: { filled: boolean }) => (
   <svg
     className="plus-icon"
-    width="20"
-    height="20"
+    width="17"
+    height="17"
     viewBox="0 0 24 24"
     fill="none"
     stroke={filled ? '#bdc3c7' : 'currentColor'}
@@ -39,33 +39,18 @@ const PlusIcon = ({ filled }: { filled: boolean }) => (
 export const ResponsiveSidebar: React.FC<ResponsiveSidebarProps> = ({
   onAddSystem,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
   return (
-    <div className={`responsive-sidebar ${isOpen ? 'open' : ''}`}>
-      <div className="hamburger-menu" onClick={toggleMenu}>
-        <div className="bar"></div>
-        <div className="bar"></div>
-        <div className="bar"></div>
+    <div className="responsive-sidebar">
+      <div className="responsive-icon" data-tooltip="Navegar para home">
+        <HomeIcon filled={true} />
       </div>
-      {isOpen && (
-        <div className="menu-items">
-          <div className="responsive-icon" data-tooltip="Navegar para home">
-            <HomeIcon filled={true} />
-          </div>
-          <div
-            className="responsive-icon"
-            data-tooltip="Adicionar novo sistema"
-            onClick={onAddSystem}
-          >
-            <PlusIcon filled={true} />
-          </div>
-        </div>
-      )}
+      <div
+        className="responsive-icon"
+        data-tooltip="Adicionar novo sistema"
+        onClick={onAddSystem}
+      >
+        <PlusIcon filled={true} />
+      </div>
     </div>
   );
 };

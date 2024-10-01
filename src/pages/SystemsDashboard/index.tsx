@@ -5,11 +5,11 @@ import { SystemCard } from '../../components/SystemCard';
 import { systems } from '../../mocks/mockSystems';
 import { SystemWithIndex } from './types';
 import { Sidebar } from '../../components/SideBar';
-import { ResponsiveSidebar } from '../../components/ResponsiveSidebar';
 import { ModalAddSystem } from '../../components/ModalAddSystem';
 import { ModalExcludeSystems } from '../../components/ModalExcludeSystems';
 import { Footer } from '../../components/Footer';
 import { COLUMN_TITLES } from './constatns';
+import { ResponsiveSidebar } from '../../components/ResponsiveSidebar';
 
 export const SystemsDashboard: React.FC = () => {
   const [allSystems, setAllSystems] = useState<SystemWithIndex[]>(
@@ -21,7 +21,6 @@ export const SystemsDashboard: React.FC = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isExcludeModalOpen, setIsExcludeModalOpen] = useState(false);
   const [systemToDelete, setSystemToDelete] = useState<number | null>(null);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -168,6 +167,9 @@ export const SystemsDashboard: React.FC = () => {
         username="Usuário"
         onSearch={handleSearch}
       />
+      {windowWidth < 600 && (
+        <ResponsiveSidebar onAddSystem={() => setIsAddModalOpen(true)} />
+      )}
       <div className="main-content">
         <div className="systems-container">
           <div className="systems-columns">
@@ -200,13 +202,7 @@ export const SystemsDashboard: React.FC = () => {
             ))}
           </div>
         </div>
-        {windowWidth < 600 ? (
-          <ResponsiveSidebar
-            onAddSystem={() => setIsAddModalOpen(true)}
-            isOpen={isSidebarOpen}
-            toggleMenu={() => setIsSidebarOpen(!isSidebarOpen)}
-          />
-        ) : (
+        {windowWidth >= 600 && (
           <Sidebar onAddSystem={() => setIsAddModalOpen(true)} />
         )}
       </div>
