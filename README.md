@@ -1,13 +1,12 @@
 # Portal de Acesso aos Sistemas
 
-![Banner do Projeto](![image](https://github.com/user-attachments/assets/dc0d3d58-48a7-48a9-808d-e8b1369cb13c)
-)
+![Banner do Projeto](<![image](https://github.com/user-attachments/assets/dc0d3d58-48a7-48a9-808d-e8b1369cb13c)>)
 
 ## Visão Geral
 
 Aplicação web desenvolvida em React com Vite e TypeScript. Inspirado pelo design
 funcional apresentado em
-[Dribbble](https://dribbble.com/shots/2084101-Dashboard-Overview/attachments/374756).
+[Dribbble](https://github.com/sagacello/mater-imperium-front/blob/main/AcessoSistemas.jpg).
 
 ## Funcionalidades Principais
 
