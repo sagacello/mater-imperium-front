@@ -23,6 +23,7 @@ funcional apresentado em
   necessários.
 - **Favoritos**: Possibilidade de marcar sistemas como favoritos para acesso
   rápido.
+- **Editar**: Possibilidade de editar o nome de sistemas que foram adicionados.
 - **Drag and Drop**: Funcionalidade de arrastar e soltar entre colunas para
   fácil reorganização.
 - **Totalmente Responsivo**: O sistema se adapta perfeitamente a diferentes
