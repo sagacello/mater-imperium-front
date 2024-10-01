@@ -1,12 +1,7 @@
+import { System } from '../CommonInterface';
+
 export interface SystemCardProps {
-  system: {
-    id: number;
-    name: string;
-    url: string;
-    lastUpdated: string;
-    isFavorite: boolean;
-    isChecked: boolean;
-  };
+  system: System;
   index: number;
   onFavoriteToggle?: (id: number, isFavorite: boolean) => void;
   onDeleteClick: (systemId: number) => void;
