@@ -22,7 +22,7 @@ export const ModalExcludeSystems: React.FC<ModalExcludeSystemsProps> = ({
             Cancelar
           </button>
           <button type="button" className="submit-btn" onClick={onDelete}>
-            Deletar
+            Excluir
           </button>
         </div>
       </div>

@@ -23,14 +23,14 @@ export const Footer: React.FC = () => {
           className="circle"
           style={{ backgroundColor: 'rgb(255, 215, 0)' }}
         ></div>
-        <span>Em manutenção</span>
+        <span>Manutenção</span>
       </div>
       <div className="footer-item">
         <div
           className="circle"
           style={{ backgroundColor: 'rgb(173, 216, 230)' }}
         ></div>
-        <span>Projetos enviados</span>
+        <span>Preparados para apresentação</span>
       </div>
     </footer>
   );
