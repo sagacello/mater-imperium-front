@@ -1,50 +1,71 @@
-# React + TypeScript + Vite
+# Portal de Acesso aos Sistemas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Banner do Projeto](https://via.placeholder.com/800x200.png?text=Portal+de+Acesso+a+Sistemas)
 
-Currently, two official plugins are available:
+## Visão Geral
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Aplicação web desenvolvida em React com Vite e TypeScript. Inspirado pelo design
+funcional apresentado em
+[Dribbble](https://dribbble.com/shots/2084101-Dashboard-Overview/attachments/374756).
 
-## Expanding the ESLint configuration
+## Funcionalidades Principais
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Visualização de Sistemas**: Interface clara e organizada para visualizar
+  todos os sistemas disponíveis.
+- **Organização em Colunas**: Sistemas agrupados em colunas para melhor
+  categorização e acesso.
+- **Adição de Sistemas**: Capacidade de adicionar novos sistemas à visualização.
+- **Remoção de Sistemas**: Opção para remover sistemas que não são mais
+  necessários.
+- **Favoritos**: Possibilidade de marcar sistemas como favoritos para acesso
+  rápido.
+- **Drag and Drop**: Funcionalidade de arrastar e soltar entre colunas para
+  fácil reorganização.
+- **Totalmente Responsivo**: O sistema se adapta perfeitamente a diferentes
+  tamanhos de tela, garantindo uma experiência consistente em dispositivos
+  desktop e móveis.
 
-- Configure the top-level `parserOptions` property like this:
+## Principais Tecnologias Utilizadas
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- React
+- Vite
+- TypeScript
+- HTML5
+- CSS3
+
+## Pré-requisitos
+
+Antes de iniciar, certifique-se de ter instalado em sua máquina:
+
+- Node.js (versão 20.x ou superior)
+- npm (normalmente vem com Node.js)
+
+## Instalação
+
+1. Clone o repositório:
+
+   ```
+   git clone git@github.com:sagacello/mater-imperium-front.git
+   ```
+
+2. Navegue até o diretório do projeto:
+
+   ```
+   cd mater-imperium-front
+   ```
+
+3. Instale as dependências:
+   ```
+   npm install
+   ```
+
+## Executando o Projeto
+
+Para iniciar o servidor de desenvolvimento:
+
+```
+npm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+O aplicativo estará disponível em `http://localhost:5173` (ou outra porta, caso
+a 5173 esteja em uso).
