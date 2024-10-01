@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import './styles.css';
 import { SystemCardProps } from './types';
 
@@ -7,9 +7,8 @@ export const SystemCard: React.FC<SystemCardProps> = ({
   index,
   onFavoriteToggle,
   onDeleteClick,
+  onCardClick,
 }) => {
-  const [isChecked, setIsChecked] = useState(false);
-
   const getColor = (index: number) => {
     const colors = ['#FFB6C1', '#ADD8E6', '#90EE90', '#FFD700'];
     return colors[index % colors.length];
@@ -77,10 +76,10 @@ export const SystemCard: React.FC<SystemCardProps> = ({
   const handleCheckClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
-      setIsChecked((prevChecked) => !prevChecked);
+      onCardClick(system.id);
       e.currentTarget.blur();
     },
-    [],
+    [onCardClick, system.id],
   );
 
   const handleTrashClick = useCallback(
@@ -94,7 +93,8 @@ export const SystemCard: React.FC<SystemCardProps> = ({
 
   const handleCardClick = useCallback(() => {
     window.open(system.url, '_blank', 'noopener,noreferrer');
-  }, [system.url]);
+    onCardClick(system.id);
+  }, [system.url, onCardClick, system.id]);
 
   const formatName = (name: string) => {
     if (name.length > 30) {
@@ -135,7 +135,7 @@ export const SystemCard: React.FC<SystemCardProps> = ({
             <StarIcon filled={system.isFavorite} />
           </button>
           <button onClick={handleCheckClick} className="icon-button">
-            <CheckIcon checked={isChecked} />
+            <CheckIcon checked={system.isChecked} />
           </button>
           <button onClick={handleTrashClick} className="icon-button">
             <TrashIcon />

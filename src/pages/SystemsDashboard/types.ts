@@ -5,6 +5,7 @@ export interface System {
   lastUpdated: string;
   status: string;
   isFavorite: boolean;
+  isChecked: boolean;
 }
 
 export interface SystemWithIndex extends System {

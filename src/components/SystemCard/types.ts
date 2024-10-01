@@ -5,8 +5,10 @@ export interface SystemCardProps {
     url: string;
     lastUpdated: string;
     isFavorite: boolean;
+    isChecked: boolean;
   };
   index: number;
   onFavoriteToggle?: (id: number, isFavorite: boolean) => void;
   onDeleteClick: (systemId: number) => void;
+  onCardClick: (systemId: number) => void;
 }

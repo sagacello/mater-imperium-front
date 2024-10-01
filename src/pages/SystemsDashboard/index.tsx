@@ -126,6 +126,15 @@ export const SystemsDashboard: React.FC = () => {
     setIsAddModalOpen(false);
   };
 
+  const handleCardClick = (systemId: number) => {
+    const updatedSystems = allSystems.map((system) =>
+      system.id === systemId ? { ...system, isChecked: true } : system,
+    );
+    setAllSystems(updatedSystems);
+    setFilteredSystems(updatedSystems);
+    updateColumns(updatedSystems);
+  };
+
   const handleDeleteClick = useCallback((systemId: number) => {
     setSystemToDelete(systemId);
     setIsExcludeModalOpen(true);
@@ -175,6 +184,7 @@ export const SystemsDashboard: React.FC = () => {
                       index={system.index}
                       onFavoriteToggle={handleFavoriteToggle}
                       onDeleteClick={handleDeleteClick}
+                      onCardClick={handleCardClick}
                     />
                   </div>
                 ))}

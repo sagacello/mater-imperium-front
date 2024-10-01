@@ -21,6 +21,7 @@ export const ModalAddSystem: React.FC<ModalProps> = ({
       status,
       isFavorite: false,
       index: 0,
+      isChecked: false,
     };
     onAddSystem(newSystem);
     onClose();
