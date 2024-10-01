@@ -7,4 +7,5 @@ export interface ModalProps {
 
 export interface SystemWithIndex extends System {
   index: number;
+  status: string;
 }

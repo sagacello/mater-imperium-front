@@ -50,9 +50,17 @@ export const SystemsDashboard: React.FC = () => {
 
   const handleSearch = useCallback(
     (searchTerm: string) => {
-      const filtered = allSystems.filter((system) =>
-        system.name.toLowerCase().includes(searchTerm.toLowerCase()),
-      );
+      const filtered = allSystems.filter((system) => {
+        const nameMatch = system.name
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
+        const lastUpdatedMatch = system.lastUpdated
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
+
+        return nameMatch || lastUpdatedMatch;
+      });
+
       setFilteredSystems(filtered);
     },
     [allSystems],
