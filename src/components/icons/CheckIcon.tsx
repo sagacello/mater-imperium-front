@@ -1,10 +1,8 @@
-import React from 'react';
-
 interface CheckIconProps {
   checked: boolean;
 }
 
-const CheckIcon: React.FC<CheckIconProps> = ({ checked }) => (
+export const CheckIcon: React.FC<CheckIconProps> = ({ checked }) => (
   <svg
     width="20"
     height="20"
@@ -18,5 +16,3 @@ const CheckIcon: React.FC<CheckIconProps> = ({ checked }) => (
     <polyline points="20 6 9 17 4 12" />
   </svg>
 );
-
-export default CheckIcon;

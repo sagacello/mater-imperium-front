@@ -7,11 +7,12 @@ import React, {
 } from 'react';
 import './styles.css';
 import { SystemCardProps } from './types';
-import StarIcon from './icons/StarIcon';
-import CheckIcon from './icons/CheckIcon';
-import TrashIcon from './icons/TrashIcon';
-import EditIcon from './icons/EditIcon';
+
 import { colors } from './constants';
+import { EditIcon } from '../icons/EditIcon';
+import { StarIcon } from '../icons/StarIcon';
+import { CheckIcon } from '../icons/CheckIcon';
+import { TrashIcon } from '../icons/TrashIcon';
 
 export const SystemCard: React.FC<SystemCardProps> = ({
   system,
