@@ -1,6 +1,7 @@
 # Portal de Acesso aos Sistemas
 
-![Banner do Projeto](https://via.placeholder.com/800x200.png?text=Portal+de+Acesso+a+Sistemas)
+![Banner do Projeto](![image](https://github.com/user-attachments/assets/dc0d3d58-48a7-48a9-808d-e8b1369cb13c)
+)
 
 ## Visão Geral
 
