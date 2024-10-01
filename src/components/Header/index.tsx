@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import './styles.css';
 import { HeaderProps } from './types';
 
@@ -9,11 +9,22 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const [dateTime, setDateTime] = useState(new Date());
   const [searchTerm, setSearchTerm] = useState('');
+  const timerRef = useRef<number | null>(null);
+
+  const updateDateTime = useCallback(() => {
+    setDateTime(new Date());
+  }, []);
 
   useEffect(() => {
-    const timer = setInterval(() => setDateTime(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
+    updateDateTime();
+    timerRef.current = window.setInterval(updateDateTime, 1000);
+
+    return () => {
+      if (timerRef.current !== null) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, [updateDateTime]);
 
   const SearchIcon = () => (
     <svg
