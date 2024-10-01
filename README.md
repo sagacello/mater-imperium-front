@@ -3,6 +3,7 @@
 <img src="https://github.com/user-attachments/assets/dc0d3d58-48a7-48a9-808d-e8b1369cb13c" width="600px" />
 
 ## Link para acesso em produção
+
 https://mater-imperium-front-jumb.vercel.app/
 
 ## Visão Geral
@@ -29,6 +30,8 @@ funcional apresentado em
   desktop e móveis.
 - **Filtragem de Sistemas**: Funcionalidade que permite filtrar os sistemas de
   acordo com critérios específicos.
+- **Sistemas checados**: Quando um sistema for visualizado, ele será exibido
+  como um check no card que faz referência a ele.
 
 ## Principais Tecnologias Utilizadas
 
