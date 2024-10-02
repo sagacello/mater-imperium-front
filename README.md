@@ -53,7 +53,7 @@ Antes de iniciar, certifique-se de ter instalado em sua máquina:
 1. Clone o repositório:
 
    ```
-   [git clone git@github.com:sagacello/mater-imperium-front.git](https://github.com/sagacello/mater-imperium-front.git)
+   https://github.com/sagacello/mater-imperium-front.git
    ```
 
 2. Navegue até o diretório do projeto:
